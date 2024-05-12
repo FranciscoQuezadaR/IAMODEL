@@ -42,7 +42,7 @@ def login():
         _correo = request.form['txtCorreo']
         _password = request.form['txtPassword']
 
-        cur = mysql.connection.cursor()
+       """ cur = mysql.connection.cursor()
         print(cur);
         cur.execute('SELECT * FROM usuario WHERE usuario = %s AND correo = %s AND contrasena = %s', (_usuario, _correo, _password,))
         account = cur.fetchone()
@@ -54,12 +54,14 @@ def login():
             session['usuario'] = account['usuario']
             return redirect(url_for('index'))
         else:
-            return render_template('login.html', mensaje="Usuario o Contraseña Incorrectas")
+            return render_template('login.html', mensaje="Usuario o Contraseña Incorrectas")"""
     return render_template('login.html')
 
 @app.route('/gallery')
 @login_required
 def gallery():
+
+    """
     cur = mysql.connection.cursor()
 
     cur.execute('SELECT * FROM imagen WHERE usuarioidUsuario = %s', (session['idUsuario'],))
@@ -69,7 +71,7 @@ def gallery():
     if not images:
         # Si no hay imágenes, renderiza una plantilla vacía o muestra un mensaje indicando que no hay imágenes.
         return render_template('gallery.html')  # Puedes crear una plantilla específica para este caso si lo prefieres.
-
+"""
     return render_template('gallery.html', images=images)
 
 @app.route('/upload', methods=['POST'])
@@ -88,11 +90,12 @@ def upload_file():
         file_path = os.path.join(uploads_dir, filename)
         file.save(file_path)
 
+        """
         cur = mysql.connection.cursor()
         cur.execute('INSERT INTO imagen (nombre, formato, ruta, usuarioidUsuario) VALUES (%s, %s, %s, %s)',
                     (filename, 'jpg', f"/uploads/{filename}", session['idUsuario']))
         mysql.connection.commit()
-        cur.close()
+        cur.close()"""
 
     return redirect(url_for('gallery'))
 
@@ -104,10 +107,11 @@ def logout():
 @app.route('/delete_image/<int:idImagen>', methods=['GET', 'POST'])
 @login_required  # Solo usuarios autenticados pueden eliminar imágenes
 def delete_image(idImagen):
+    """
     cur = mysql.connection.cursor()
     cur.execute("DELETE FROM imagen WHERE idImagen = %s", (idImagen,))
     mysql.connection.commit()
-    cur.close()
+    cur.close()"""
     return redirect(url_for('gallery'))
 
 if __name__ == '__main__':
