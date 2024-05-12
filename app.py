@@ -33,7 +33,7 @@ def before_request():
 @app.route('/')
 @login_required
 def index():
-    return render_template('index.html')
+    print('hello')
 
 @app.route('/login', methods=["GET", "POST"])
 def login():
@@ -42,7 +42,7 @@ def login():
         _correo = request.form['txtCorreo']
         _password = request.form['txtPassword']
 
-       """ cur = mysql.connection.cursor()
+    """ cur = mysql.connection.cursor()
         print(cur);
         cur.execute('SELECT * FROM usuario WHERE usuario = %s AND correo = %s AND contrasena = %s', (_usuario, _correo, _password,))
         account = cur.fetchone()
